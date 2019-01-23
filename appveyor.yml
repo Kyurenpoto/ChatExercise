@@ -1,0 +1,16 @@
+version: 0.0.1.0 ({build})
+image:
+- Visual Studio 2019 Preview
+- Visual Studio 2017
+configuration:
+- Debug
+- Release
+platform: Any CPU
+environment:
+  WEBHOOK_URL:
+    secure: +NE6jUbS7Ibdhqfb0IgTV5lbW3P2apI4lMQZOlAnhhik/lZlKwLFagQuR0ffXoC07VAW3wmw0CyxomFW2UGEflpy4X2jaAHg0kkLB37EEPffCsIZL+dSefr8XQBgrpnbsa6wuI0lRRZJ2vkHb7zOfzyp/zfh7nEXdLfB8alB/Oo=
+before_build:
+- cmd: nuget restore
+build:
+  parallel: true
+  verbosity: normal
