@@ -22,3 +22,5 @@ test_script:
 - ps: ./test.ps1 $env:APPVEYOR_BUILD_WORKER_IMAGE $env:CONFIGURATION ".\coverage.xml"
 after_test:
 - ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN
+- ps: $wc = New-Object 'System.Net.WebClient'
+- ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\coverage.xml))
