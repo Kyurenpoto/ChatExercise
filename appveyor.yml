@@ -13,12 +13,11 @@ environment:
     secure: KKAOum+i0q1IJXTel01XaOHNcXWjnQIGDup+v9hvoU4jxloQbKItaAEhZYIBvz1k
 before_build:
 - ps: nuget restore
-- ps: choco install opencover.portable
-- ps: choco install codecov
+- ps: choco install opencover.portable codecov
 build:
   parallel: true
   verbosity: normal
 test_script:
-- ps: ./test.ps1 $env:APPVEYOR_BUILD_WORKER_IMAGE $env:CONFIGURATION ".\coverage.xml"
+- ps: ./test.ps1 $env:CONFIGURATION ".\coverage.xml"
 after_test:
 - ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN

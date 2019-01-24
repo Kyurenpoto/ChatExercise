@@ -1,29 +1,9 @@
-$IMAGE = $args[0]
-$CONFIGURATION = $args[1]
-$OUTPUT = $args[2]
+$CONFIG = $args[0]
+$OUTPUT = $args[1]
 
-$Target = $null
-$Ext = $null
 $TargetArgs = $null
 
-Switch ($IMAGE) {
-    'Visual Studio 2019 Preview' {
-        $Target = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-        $Ext = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions"
-        Break
-    }
-    'Visual Studio 2017' {
-        $Target = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-        $Ext = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions"
-        Break
-    }
-    default {
-        Write-Output "Invalid image: Image should be chosen from `"Visual Studio 2019 Preview`" and `"Visual Studio 2017`"."
-        Exit
-    }
-}
-
-Switch ($CONFIGURATION) {
+Switch ($CONFIG) {
     'Debug' {
         $TargetArgs = ".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll"
         Break
@@ -38,6 +18,5 @@ Switch ($CONFIGURATION) {
     }
 }
 
-& OpenCover.Console.exe -register:user -target:"$Target" -targetargs:"$TargetArgs" -output:"$OUTPUT"
-& copy 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\AppVeyor*' 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions'
-& $Target $TargetArgs /Logger:Appveyor /Parallel
+& OpenCover.Console.exe -register:user -target:"vstest.console" -targetargs:"$TargetArgs" -output:"$OUTPUT"
+& vstest.console $TargetArgs /Logger:Appveyor /Parallel /Enablecodecoverage /InIsolation /Blame
