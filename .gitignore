@@ -6,3 +6,5 @@
 /ChatExercise/obj/Debug
 /.vs/ChatExercise/v16
 packages/
+ChatExercise.Test/bin/
+ChatExercise.Test/obj/
