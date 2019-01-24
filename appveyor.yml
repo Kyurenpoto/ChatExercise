@@ -1,4 +1,10 @@
 version: 0.0.1.0 ({build})
+image:
+- Visual Studio 2019 Preview
+- Visual Studio 2017
+configuration:
+- Debug
+- Release
 platform: Any CPU
 environment:
   WEBHOOK_URL:
@@ -12,31 +18,7 @@ before_build:
 build:
   parallel: true
   verbosity: normal
+test_script:
+- ps: ./test.ps1 $env:APPVEYOR_BUILD_WORKER_IMAGE $env:CONFIGURATION ".\coverage.xml"
 after_test:
-  - ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN
-
-for:
-
--
-  image: Visual Studio 2019 Preview
-  configuration: Debug
-  test_script:
-  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll" -output:".\coverage.xml"
-
--
-  image: Visual Studio 2019 Preview
-  configuration: Release
-  test_script:
-  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll" -output:".\coverage.xml"
-
--
-  image: Visual Studio 2017
-  configuration: Debug
-  test_script:
-  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll" -output:".\coverage.xml"
-
--
-  image: Visual Studio 2017
-  configuration: Release
-  test_script:
-  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll" -output:".\coverage.xml"
+- ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN
