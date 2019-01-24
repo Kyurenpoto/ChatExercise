@@ -9,8 +9,18 @@ platform: Any CPU
 environment:
   WEBHOOK_URL:
     secure: +NE6jUbS7Ibdhqfb0IgTV5lbW3P2apI4lMQZOlAnhhik/lZlKwLFagQuR0ffXoC07VAW3wmw0CyxomFW2UGEflpy4X2jaAHg0kkLB37EEPffCsIZL+dSefr8XQBgrpnbsa6wuI0lRRZJ2vkHb7zOfzyp/zfh7nEXdLfB8alB/Oo=
+  CODECOV_TOKEN:
+    secure: KKAOum+i0q1IJXTel01XaOHNcXWjnQIGDup+v9hvoU4jxloQbKItaAEhZYIBvz1k
 before_build:
-- cmd: nuget restore
+- ps: |
+    nuget restore
+    choco install opencover.portable codecov
 build:
   parallel: true
   verbosity: normal
+test_script:
+- ps: |
+    vstest.console ".\ChatExercise.Test\bin\$($env:CONFIGURATION)\ChatExercise.Test.dll" /Logger:Appveyor /Parallel /InIsolation /Blame
+    ./test.ps1 $env:APPVEYOR_BUILD_WORKER_IMAGE  $env:CONFIGURATION ".\coverage.xml"
+after_test:
+- ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN
