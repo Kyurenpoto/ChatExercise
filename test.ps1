@@ -22,11 +22,11 @@ Switch ($IMAGE) {
 
 Switch ($CONFIGURATION) {
     'Debug' {
-        $TargetArgs = "`".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll`""
+        $TargetArgs = "`"/logger:Appveyor`"`".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll`""
         Break
     }
     'Release' {
-        $TargetArgs = "`".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll`""
+        $TargetArgs = "`"/logger:Appveyor`"`".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll`""
         Break
     }
     default {
