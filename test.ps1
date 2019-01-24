@@ -35,4 +35,4 @@ Switch ($CONFIGURATION) {
     }
 }
 
-& OpenCover.Console.exe -register:user -target:"$Target" -targetargs:"$TargetArgs" -output:"$OUTPUT" -filter:"+[ChatExercise*]* -[ChatExercise*]*Designer -[ChatExercise.Test*]*"
+& OpenCover.Console.exe -register:user -target:"$Target" -targetargs:"$TargetArgs" -output:"$OUTPUT" -filter:"+[ChatExercise*]* -[ChatExercise*]Properties.* -[ChatExercise.Test*]*"
