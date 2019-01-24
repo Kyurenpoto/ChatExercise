@@ -1,16 +1,42 @@
 version: 0.0.1.0 ({build})
-image:
-- Visual Studio 2019 Preview
-- Visual Studio 2017
-configuration:
-- Debug
-- Release
 platform: Any CPU
 environment:
   WEBHOOK_URL:
     secure: +NE6jUbS7Ibdhqfb0IgTV5lbW3P2apI4lMQZOlAnhhik/lZlKwLFagQuR0ffXoC07VAW3wmw0CyxomFW2UGEflpy4X2jaAHg0kkLB37EEPffCsIZL+dSefr8XQBgrpnbsa6wuI0lRRZJ2vkHb7zOfzyp/zfh7nEXdLfB8alB/Oo=
+  CODECOV_TOKEN:
+    secure: KKAOum+i0q1IJXTel01XaOHNcXWjnQIGDup+v9hvoU4jxloQbKItaAEhZYIBvz1k
 before_build:
-- cmd: nuget restore
+- ps: nuget restore
+- ps: choco install opencover.portable
+- ps: choco install codecov
 build:
   parallel: true
   verbosity: normal
+after_test:
+  - ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN
+
+for:
+
+-
+  image: Visual Studio 2019 Preview
+  configuration: Debug
+  test_script:
+  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll" -output:".\coverage.xml"
+
+-
+  image: Visual Studio 2019 Preview
+  configuration: Release
+  test_script:
+  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll" -output:".\coverage.xml"
+
+-
+  image: Visual Studio 2017
+  configuration: Debug
+  test_script:
+  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll" -output:".\coverage.xml"
+
+-
+  image: Visual Studio 2017
+  configuration: Release
+  test_script:
+  - ps: OpenCover.Console.exe -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" -targetargs:".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll" -output:".\coverage.xml"

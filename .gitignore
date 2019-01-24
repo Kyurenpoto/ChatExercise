@@ -8,3 +8,5 @@
 packages/
 ChatExercise.Test/bin/
 ChatExercise.Test/obj/
+ChatExercise/bin/
+ChatExercise/obj/
