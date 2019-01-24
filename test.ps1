@@ -39,5 +39,5 @@ Switch ($CONFIGURATION) {
 }
 
 & OpenCover.Console.exe -register:user -target:"$Target" -targetargs:"$TargetArgs" -output:"$OUTPUT"
-& copy "$Ext\AppVeyor*" "$Ext"
+& copy 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\AppVeyor*' 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions'
 & $Target $TargetArgs /Logger:Appveyor /Parallel
