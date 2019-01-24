@@ -20,8 +20,7 @@ build:
   verbosity: normal
 test_script:
 - ps: |
-    $asm = ".\ChatExercise.Test\bin\$($env:CONFIGURATION)\ChatExercise.Test.dll"
-    vstest.console "$asm" /Logger:Appveyor /Parallel /InIsolation /Blame
-    OpenCover.Console.exe -register:user -target:"vstest.console" -targetargs:"$asm" -output:".\coverage.xml"
+    vstest.console ".\ChatExercise.Test\bin\$($env:CONFIGURATION)\ChatExercise.Test.dll" /Logger:Appveyor /Parallel /InIsolation /Blame
+    ./test.ps1 $env:APPVEYOR_BUILD_WORKER_IMAGE  $env:CONFIGURATION ".\coverage.xml"
 after_test:
 - ps: codecov -f "coverage.xml" -t $env:CODECOV_TOKEN
