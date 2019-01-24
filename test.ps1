@@ -7,11 +7,11 @@ $TargetArgs = $null
 
 Switch ($IMAGE) {
     'Visual Studio 2019 Preview' {
-        $Target = "`"C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe`""
+        $Target = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
         Break
     }
     'Visual Studio 2017' {
-        $Target = "`"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe`""
+        $Target = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
         Break
     }
     default {
@@ -22,11 +22,11 @@ Switch ($IMAGE) {
 
 Switch ($CONFIGURATION) {
     'Debug' {
-        $TargetArgs = "`"/logger:Appveyor`"`".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll`""
+        $TargetArgs = ".\ChatExercise.Test\bin\Debug\ChatExercise.Test.dll"
         Break
     }
     'Release' {
-        $TargetArgs = "`"/logger:Appveyor`"`".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll`""
+        $TargetArgs = ".\ChatExercise.Test\bin\Release\ChatExercise.Test.dll"
         Break
     }
     default {
@@ -35,6 +35,5 @@ Switch ($CONFIGURATION) {
     }
 }
 
-$Result = "`"$OUTPUT`""
-
-& OpenCover.Console.exe -register:user -target:$Target -targetargs:$TargetArgs -output:$Result
+& OpenCover.Console.exe -register:user -target:"$Target" -targetargs:"$TargetArgs" -output:"$OUTPUT"
+& $Target $TargetArgs /Logger:Appveyor /Parallel
