@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro;
 using System;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ChatExercise
 {
@@ -19,6 +20,8 @@ namespace ChatExercise
             ThemeManager.AddAccent("CustomAccent1", new Uri(custom_accent_1));
             ThemeManager.AddAccent("CustomAccent2", new Uri(custom_accent_2));
             ThemeManager.AddAppTheme("CustomTheme", new Uri(custom_theme));
+
+            ThemeManagerHelper.CreateAppStyleBy(Colors.Black, true);
 
             base.OnStartup(e);
         }
