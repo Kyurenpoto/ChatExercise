@@ -21,7 +21,7 @@ namespace ChatExercise
             ThemeManager.AddAccent("CustomAccent2", new Uri(custom_accent_2));
             ThemeManager.AddAppTheme("CustomTheme", new Uri(custom_theme));
 
-            ThemeManagerHelper.CreateAppStyleBy(Colors.Black, true);
+            ThemeManagerHelper.CreateAppStyleBy(Color.FromArgb(0xff, 0x17, 0x17, 0x17), true);
 
             base.OnStartup(e);
         }
